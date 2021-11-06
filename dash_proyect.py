@@ -399,95 +399,116 @@ app.layout = html.Div([
 
 
 def plot_variable_pie(cancer):
+    if cancer in TipoC_m:
 
-    j = TipoC_m.index(cancer)
-    c = TipoC[j]
+        j = TipoC_m.index(cancer)
+        c = TipoC[j]
 
-    data = bdo[bdo['Subgrupo'] == c]
-    data = data[['Sexo','Usuarios']].groupby(['Sexo']).sum()
+        data = bdo[bdo['Subgrupo'] == c]
+        data = data[['Sexo','Usuarios']].groupby(['Sexo']).sum()
 
-    fig = px.pie(values=data['Usuarios'], names=data.index)
-    return fig
+        fig = px.pie(values=data['Usuarios'], names=data.index)
+        return fig
+    else:
+        return go.Figure(data=[])
 
 @app.callback(Output('Ubar','figure'),
                 Input('Ucancer', 'value'))
 
 def barplot_variable(cancer):
-    j = TipoC_m.index(cancer)
-    c = TipoC[j]
-    
-    bd2 = pd.DataFrame(bdo[['Subgrupo','Departamento','Sexo','Usuarios']].groupby(['Subgrupo','Departamento','Sexo']).sum())
-    bd2 = bd2.reset_index()
-    bd2 = bd2[bd2['Subgrupo'] == c]
-    bd2 = bd2[['Departamento', 'Usuarios','Sexo']].sort_values('Usuarios', ascending = False)
-    bd2 = bd2[0:10]
+    if cancer in TipoC_m:
 
-    fig = px.bar(bd2, x='Departamento', y='Usuarios', color='Sexo')
-    fig.update_traces( textposition='outside')
-    fig.update_layout( uniformtext_minsize=8, uniformtext_mode='hide')
-    return fig
+        j = TipoC_m.index(cancer)
+        c = TipoC[j]
+        
+        bd2 = pd.DataFrame(bdo[['Subgrupo','Departamento','Sexo','Usuarios']].groupby(['Subgrupo','Departamento','Sexo']).sum())
+        bd2 = bd2.reset_index()
+        bd2 = bd2[bd2['Subgrupo'] == c]
+        bd2 = bd2[['Departamento', 'Usuarios','Sexo']].sort_values('Usuarios', ascending = False)
+        bd2 = bd2[0:10]
+
+        fig = px.bar(bd2, x='Departamento', y='Usuarios', color='Sexo')
+        fig.update_traces( textposition='outside')
+        fig.update_layout( uniformtext_minsize=8, uniformtext_mode='hide')
+        return fig
+    else:
+        return go.Figure(data=[])
 
 @app.callback(Output('Uscatter','figure'),
                 Input('Ucancer', 'value'))
 
 def scatter_variable(cancer):
-    j = TipoC_m.index(cancer)
-    c = TipoC[j]
-    
-    bd2 = bdo[bdo['Subgrupo'] == c]
-    bd2 = bdo[['Usuarios','Sexo','Edad','Número de Atenciones']].groupby(['Sexo','Edad']).sum()
-    bd2 = bd2.reset_index()
-    
-    fig = px.scatter(bd2, x="Número de Atenciones", y="Usuarios", color="Sexo",
-                        size='Edad')
-    return fig
+    if cancer in TipoC_m:
+
+        j = TipoC_m.index(cancer)
+        c = TipoC[j]
+        
+        bd2 = bdo[bdo['Subgrupo'] == c]
+        bd2 = bdo[['Usuarios','Sexo','Edad','Número de Atenciones']].groupby(['Sexo','Edad']).sum()
+        bd2 = bd2.reset_index()
+        
+        fig = px.scatter(bd2, x="Número de Atenciones", y="Usuarios", color="Sexo",
+                            size='Edad')
+        return fig
+    else:
+        return go.Figure(data=[])
 
 @app.callback(Output('Uscatter_2','figure'),
                 Input('Ucancer', 'value'))
 
 def scatter_2_variable(cancer):
-    j = TipoC_m.index(cancer)
-    c = TipoC[j]
-    
-    bd2 = bdo[['Subgrupo','Sexo','Edad','Número de Atenciones','Tipo Servicio','Ambito del Procedimiento']]
-    bd2 = bd2.reset_index()
-    bd2 = bd2[bd2['Subgrupo'] == c]
-    
-    fig = px.scatter(bd2, x="Número de Atenciones", y="Edad", facet_row="Sexo", facet_col="Tipo Servicio", color="Ambito del Procedimiento")
+    if cancer in TipoC_m:
+        j = TipoC_m.index(cancer)
+        c = TipoC[j]
 
-    return fig
+        
+        bd2 = bdo[['Subgrupo','Sexo','Edad','Número de Atenciones','Tipo Servicio','Ambito del Procedimiento']]
+        bd2 = bd2.reset_index()
+        bd2 = bd2[bd2['Subgrupo'] == c]
+        
+        fig = px.scatter(bd2, x="Número de Atenciones", y="Edad", facet_row="Sexo", facet_col="Tipo Servicio", color="Ambito del Procedimiento")
+
+        return fig
+    else:
+        return go.Figure(data=[])
 
 @app.callback(Output('Uscatter_3','figure'),
                 Input('Ucancer', 'value'))
 
 def scatter_3_variable(cancer):
-    j = TipoC_m.index(cancer)
-    c = TipoC[j]
-    
-    bd2 = bdo[bdo['Subgrupo'] == c]
-    bd2 = bd2[['Sexo','Edad','Número de Atenciones']]
-    bd2 = bd2.reset_index()
-       
-    fig = px.scatter(bd2, x="Número de Atenciones", y="Edad", color="Sexo", marginal_y="box",
-           marginal_x="box", template="simple_white")
+    if cancer in TipoC_m:
+        j = TipoC_m.index(cancer)
+        c = TipoC[j]
+        
+        bd2 = bdo[bdo['Subgrupo'] == c]
+        bd2 = bd2[['Sexo','Edad','Número de Atenciones']]
+        bd2 = bd2.reset_index()
+        
+        fig = px.scatter(bd2, x="Número de Atenciones", y="Edad", color="Sexo", marginal_y="box",
+            marginal_x="box", template="simple_white")
 
-    return fig
+        return fig
+    else:
+        return go.Figure(data=[])
 
 @app.callback(Output('Ubox','figure'),
                 Input('Ucancer', 'value'))
 
 def boxplot_variable(cancer):
-    j = TipoC_m.index(cancer)
-    c = TipoC[j]
-    
-    data = bdo[bdo['Subgrupo'] == c]
-    data = data[['Sexo','Ambito del Procedimiento','Usuarios']]
-    data = data.reset_index()
-    
-    fig = px.box(data, x="Ambito del Procedimiento", y="Usuarios", color="Sexo")
-    fig.update_traces(quartilemethod="exclusive") # or "inclusive", or "linear" by default
+    if cancer in TipoC_m:
+        j = TipoC_m.index(cancer)
+        c = TipoC[j]
+        
+        data = bdo[bdo['Subgrupo'] == c]
+        data = data[['Sexo','Ambito del Procedimiento','Usuarios']]
+        data = data.reset_index()
+        
+        fig = px.box(data, x="Ambito del Procedimiento", y="Usuarios", color="Sexo")
+        fig.update_traces(quartilemethod="exclusive") # or "inclusive", or "linear" by default
 
-    return fig
+        return fig
+    else:
+        return go.Figure(data=[])
 
 @app.callback(Output('my-output','children'),
     Input(component_id='Capita',    component_property='value'),
