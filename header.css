@@ -1,0 +1,65 @@
+.divBorder{
+	margin-left: 30px ;
+	margin-right: 30px ;
+	margin-top: 20px ;
+	background-color: #261C2C;
+	color: white;
+	text-align: justify;
+}
+
+.BrSpace{
+	background-color: #261C2C;
+	height: 20px;
+}
+
+.TabsP{
+	margin-left: 20px;
+	margin-right: 20px;
+	margin-bottom: 0px;
+
+	background-color: white;
+	color: white;
+	font-weight: bold;
+
+	border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+	border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+
+}
+
+.Dp-Cancer{
+	margin-bottom: 20px;
+	color: black;
+}
+
+.TabsP-Tab{
+	background-color: #6E85B2;
+	color: white;
+
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+	border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+
+    border-left: 0px !important;
+    border-right: 0px !important;
+    border-bottom: 0px !important;
+    border-top: 0px !important;
+
+	padding: 12px !important;
+}
+
+.H-Card {
+	background-color: #261C2C;
+	color: white;
+}
+
+body {
+	margin: 0;
+	background-color: #261C2C;
+}
+
+.Gcard{
+	width: 100%;
+}
